@@ -1,4 +1,4 @@
-% EK non-tradable oil vs tradable oil for different amount of alpha (CES function).
+% EK non-tradable oil vs tradable oil for different alphas (CES function).
 % Runing the script for both models in order to plot the graphs.
 % Graphs saving directory HAS TO BE CHANGED BEFORE EXECUTING THE CODE.
 
@@ -6,6 +6,11 @@ clear;
 clc;
 tic;
 
+%-------------------------------------------------------------------
+%PWD
+%-------------------------------------------------------------------
+
+savepath = fullfile('/Users/rezaparsi/Desktop/Trade summer project/','Output');
 
 
 alphas = linspace(0.01,0.79,10);
@@ -75,7 +80,7 @@ xlabel('Alpha');
 ylabel('Decline in Real Wage (%)');
 
 
-savepath = fullfile('/Users/rezaparsi/Desktop/Trade summer project/','Output');
-saveas(figure(1),fullfile(savepath,'figCES1'),'jpeg');
-saveas(figure(2),fullfile(savepath,'figCES2'),'jpeg');
+
+saveas(figure(1),fullfile(savepath,'Real Wage CES1'),'jpeg');
+saveas(figure(2),fullfile(savepath,'Decline % Real Wage CES2'),'jpeg');
 toc
