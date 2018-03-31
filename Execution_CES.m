@@ -13,7 +13,7 @@ tic;
 savepath = fullfile('/Users/rezaparsi/Desktop/Trade summer project/','Output');
 
 
-alphas = linspace(0.01,0.79,10);
+alphas = 1.1;
 
 for counter = 1:size(alphas,2)
     setappdata(0,'alpha',alphas(counter));
@@ -21,9 +21,7 @@ for counter = 1:size(alphas,2)
     resultoil(counter) = Resultsoil;
 end
 
-clearvars -except resultoil;
-
-alphas = linspace(0.01,0.79,10);
+clearvars -except resultoil alphas;
 
 for counter = 1:size(alphas,2)
     setappdata(0,'alpha',alphas(counter));
@@ -79,7 +77,7 @@ legend('Initial Oil Reserve = 60%','Initial Oil Reserve = 10%','Initial Oil Rese
 xlabel('Alpha');
 ylabel('Decline in Real Wage (%)');
 
-
+alphas = alphas';
 
 saveas(figure(1),fullfile(savepath,'Real Wage CES1'),'jpeg');
 saveas(figure(2),fullfile(savepath,'Decline % Real Wage CES2'),'jpeg');

@@ -6,21 +6,31 @@ function f = solverEKMCES(N,t,dni,theta,gama,beta,alpha,oii,l,param)
     w    = param(N^2+N+1:N^2+2*N);
     o    = param(N^2+2*N+1:N^2+3*N);
     
-    
     f1 = zeros(N,1);
     f2 = zeros(N^2,1);
     f3 = zeros(N,1);
     f4 = zeros(N,1);
     
     
-    % oil price
     
-    po = 0;
+    % price of labor and intermediate goods combined for simplification of
+    % coding (it does not have a meaning)
+    
+    pp = zeros(N,1);
+    
     for i = 1:N
-        po = po + alpha * w(i) * l(i) / beta;
+        
+        pp(i) = (w(i)^(beta) * p(i)^(1-beta))^(1-alpha);
+    
     end
     
+    % oil price
     
+    oilpricefun = @(po) oil_price_solver_CES(N,w,l,beta,alpha,pp,po);
+    price = fsolve(oilpricefun,mean(pp))
+    
+
+     
     % price functions
     
     for n = 1:N
@@ -29,7 +39,7 @@ function f = solverEKMCES(N,t,dni,theta,gama,beta,alpha,oii,l,param)
         
         for i = 1:N
             
-        temp = temp + t(i) * (dni(n,i)* ((w(i)^(beta) * (p(i)^(1-beta)))^(1-alpha) + po^(1-alpha))^(1/(1-alpha)))^(-theta);
+        temp = temp + t(i) * (dni(n,i)* (pp(i) + price^(1-alpha))^(1/(1-alpha)))^(-theta);
         
         end
         
@@ -41,7 +51,7 @@ function f = solverEKMCES(N,t,dni,theta,gama,beta,alpha,oii,l,param)
     for n = 1:N
         for i = 1:N
             
-         f2(N*(n-1)+i) =  pini(n,i) - t(i)*((gama * dni(n,i) * ((w(i)^(beta) * (p(i)^(1-beta)))^(1-alpha) + po^(1-alpha))^(1/(1-alpha))) / p(n))^(-theta);
+         f2(N*(n-1)+i) =  pini(n,i) - t(i)*((gama * dni(n,i) * (pp(i) + price^(1-alpha))^(1/(1-alpha))) / p(n))^(-theta);
         
         end
     end
@@ -53,18 +63,18 @@ function f = solverEKMCES(N,t,dni,theta,gama,beta,alpha,oii,l,param)
         
         for n = 1:N
         
-        f3(i) = f3(i) + pini(n,i) * w(n) * l(n);
+        f3(i) = f3(i) + pini(n,i) * (pp(n)+price^(1-alpha))/pp(n) * w(n) * l(n);
         
         end
         
-        f3(i) = w(i) * l(i) - f3(i) - po * (oii(i)-o(i));
+        f3(i) = w(i) * l(i) - f3(i) * pp(i)/ (pp(i)+price^(1-alpha)) - price * (oii(i)-o(i));
     end
     
     % oil consumtion
     
     for i = 1:N
         
-        f4(i) = (alpha/beta) * w(i) * l(i)/po - o(i); 
+        f4(i) = (1/beta) * price^(1-alpha)/pp(i) * w(i) * l(i) - price * o(i); 
     end
    
     

@@ -20,7 +20,6 @@ function f = solverEKM(N,t,dni,theta,gama,beta,alpha,oii,l,param)
         po = po + alpha * w(i) * l(i) / beta;
     end
     
-    
     % price functions
     
     for n = 1:N
@@ -53,11 +52,11 @@ function f = solverEKM(N,t,dni,theta,gama,beta,alpha,oii,l,param)
         
         for n = 1:N
         
-        f3(i) = f3(i) + pini(n,i) * w(n) * l(n);
+        f3(i) = f3(i) +  pini(n,i) * w(n) * l(n);
         
         end
         
-        f3(i) = w(i) * l(i) - f3(i) - po * (oii(i)-o(i));
+        f3(i) = w(i) * l(i) - f3(i) -  po * (oii(i)-o(i));
     end
     
     % oil consumtion

@@ -8,26 +8,26 @@ tic;
 clear;
 clc;
 
-N     = 4;                           % n = # of the countries
+N     = 2;                           % n = # of the countries
 %-------------------------------------------------------------------
-t     = [1;1;1;1];                     % technology of countries
+t     = [1;1];                     % technology of countries
 t     = bsxfun(@rdivide,t,t(N,1));   % tech relative to US
 %-------------------------------------------------------------------
-dni   = 2 * ones(N,N);                   % trade costs
+dni   = 1 * ones(N,N);                   % trade costs
 
 for i = 1:N
     dni(i,i) =1;
 end
 %-------------------------------------------------------------------
 sigma = 2;                            % elasticity of substitution
-theta = 4;                         % Comparative advantage
+theta = 8.28;                         % Comparative advantage
 
 gamafun = @(x) x.^((1-sigma)/theta) .* exp(-x);  % gama function
 gama  = integral(gamafun,0,Inf).^(1/(1-sigma));    
 
-beta  = 0.5;                         % Labor share 
+beta  = 0.2;                         % Labor share 
 %-------------------------------------------------------------------
-l     = [1;1;1;1];                    % labor force
+l     = [1;1];                    % labor force
 l     = bsxfun(@rdivide,l,l(N,:));    % labor force  relative to US
 %-------------------------------------------------------------------
 
@@ -49,6 +49,6 @@ p    = x2(1:N,1);
 w    = x2(N^2+N+1:end,1);
 pini = x2(N+1:N^2+N,1);
 pini = reshape(pini,N,N);
-   
+ 
 
 toc;

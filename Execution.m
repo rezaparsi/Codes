@@ -12,7 +12,7 @@ tic;
 
 
 
-alphas = linspace(0.01,0.79,10);
+alphas = linspace(0.01,0.6,30);
 
 for counter = 1:size(alphas,2)
     setappdata(0,'alpha',alphas(counter));
@@ -63,9 +63,9 @@ hold on;
 end
 
 hold off;
-legend('Initial Oil Reserve = 60%','Initial Oil Reserve = 10%','Initial Oil Reserve = 30%')
-xlabel('Alpha');
-ylabel('Real Wage');
+legend({'Initial Oil Reserve = 60%','Initial Oil Reserve = 10%','Initial Oil Reserve = 30%'},'FontName','Roman')
+xlabel('Alpha','FontName','Roman');
+ylabel('Real Wage','FontName','Roman');
 
 figure(2);
 
@@ -74,9 +74,9 @@ for j = 1:N;
     hold on;
 end
 
-legend('Initial Oil Reserve = 60%','Initial Oil Reserve = 10%','Initial Oil Reserve = 30%')
-xlabel('Alpha');
-ylabel('Decline in Real Wage (%)');
+legend({'Initial Oil Reserve = 60%','Initial Oil Reserve = 10%','Initial Oil Reserve = 30%'},'FontName','Roman','location','southeast')
+xlabel('Alpha','FontName','Roman');
+ylabel('Decline in Real Wage (%)','FontName','Roman');
 
 
 savepath = fullfile('/Users/rezaparsi/Desktop/Trade summer project/','Output');
